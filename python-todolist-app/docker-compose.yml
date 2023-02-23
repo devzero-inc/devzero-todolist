@@ -1,0 +1,25 @@
+version: "2"
+services:
+  app:
+    build: ./app
+    links:
+      - db
+      - user-svc
+    ports:
+      - "6000:6000"
+    environment:
+      USER_SVC_HOSTPORT: http://user-svc:5000
+  db:
+    image: mysql:5.7.28
+    ports:
+      - "32000:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - ./db:/docker-entrypoint-initdb.d/:ro
+  user-svc:
+    build: ../python-user-svc/app
+    links:
+      - db
+    ports:
+      - "5000:5000"

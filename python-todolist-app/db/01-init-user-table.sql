@@ -1,5 +1,5 @@
-CREATE DATABASE IF NOT EXISTS `user-svc`;
-USE `user-svc`;
+CREATE DATABASE IF NOT EXISTS `todolist-app`;
+USE `todolist-app`;
 
 CREATE TABLE users (
   `user_id` varchar(36) NOT NULL,
