@@ -11,7 +11,7 @@ config = {
     'password': 'root',
     'host': 'db',
     'port': '3306',
-    'database': 'user-svc'
+    'database': 'todolist-app'
 }
 
 def _get_users() -> List[Dict]:

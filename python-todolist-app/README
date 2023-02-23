@@ -1,0 +1,43 @@
+# todolist app
+#### get todos for a user
+
+```lang=bash
+curl --header "Content-Type: application/json" \
+ --request GET \
+ http://localhost:6000/users/debo@example.com/todos
+```
+
+#### add todo for a user
+
+```lang=bash
+curl --header "Content-Type: application/json" \
+  --request POST \
+  --data '{"description":"todo-3","due_date":"01-15-2026", "priority":"low"}' \
+  http://localhost:6000/users/debo@example.com/todos
+```
+
+# user service 
+#### get user
+
+```lang=bash
+curl --header "Content-Type: application/json" \
+  --request GET \
+  http://localhost:5000/users/debo@example.com
+```
+
+#### get users
+
+```lang=bash
+curl --header "Content-Type: application/json" \
+  --request GET \
+  http://localhost:5000/users
+```
+
+#### create user
+
+```lang=bash
+curl --header "Content-Type: application/json" \
+  --request POST \
+  --data '{"name":"John Doe","email":"johndoe@example.com"}' \
+  http://localhost:5000/users
+```
