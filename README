@@ -1,0 +1,19 @@
+# Todolist application (in various languages)
+
+## Components
+
+### User service
+
+- create user
+- get all users
+- get user
+
+### Todolist app
+
+- get all todos for user
+- create a new todo item for user
+
+## Data flow
+
+![plot](docs/todolist-microservices.png)
+
