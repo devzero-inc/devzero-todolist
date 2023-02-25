@@ -16,6 +16,15 @@ curl --header "Content-Type: application/json" \
   http://localhost:6000/users/debo@example.com/todos
 ```
 
+#### edit todo for user
+
+```lang=bash
+curl --header "Content-Type: application/json"  \
+  --request PUT \
+  --data '{"todo_id":"26fea522-be64-42d9-9eb9-2a2a4ea93276", "completed": true}'\
+  http://localhost:6000/users/debo@example.com/todos
+```
+
 # user service 
 #### get user
 
