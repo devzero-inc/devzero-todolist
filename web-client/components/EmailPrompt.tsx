@@ -45,7 +45,7 @@ export default function EmailPrompt({
     },
   });
   return (
-    <Grid container spacing={8}>
+    <Grid container spacing={8} sx={{ margin: "auto" }}>
       <Grid item xs={12} md={6} sx={{ textAlign: "center" }}>
         <Typography variant="h2" sx={{ mb: 3 }}>
           Start a new list
