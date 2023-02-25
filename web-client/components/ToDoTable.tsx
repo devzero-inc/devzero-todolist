@@ -1,11 +1,29 @@
 import useTodos from "@/fetchers/useTodos";
-import { Box, Button, Checkbox, Chip, Typography } from "@mui/material";
+import { Box, Checkbox, Chip, Typography } from "@mui/material";
 import { DataGrid, GridCellParams } from "@mui/x-data-grid";
 import dayjs from "dayjs";
 import { RadioButtonUnchecked, CheckCircle } from "@mui/icons-material";
+import axios from "axios";
+
+interface TodoItemType {
+  completed: boolean;
+  description: string;
+  due_date: string;
+  id: string;
+  priority: string;
+}
 
 export default function ToDoTable({ email }: { email: string }) {
-  const { list } = useTodos(email);
+  const { list, mutate } = useTodos(email);
+
+  const completeTodo = async (params: TodoItemType) => {
+    const postBody = {
+      todo_id: params.id,
+      completed: true,
+    };
+    await axios.put(`/api/update-todo/${email}`, postBody);
+    mutate();
+  };
   const columns = [
     {
       field: "completed",
@@ -13,7 +31,7 @@ export default function ToDoTable({ email }: { email: string }) {
       maxWidth: 60,
       renderCell: (params: GridCellParams) => {
         const onClick = () => {
-          console.log(params);
+          completeTodo(params.row);
         };
         return (
           <Checkbox
@@ -30,7 +48,14 @@ export default function ToDoTable({ email }: { email: string }) {
       headerName: "",
       flex: 1,
       renderCell: (params: GridCellParams) => (
-        <Typography variant="body2">{params.row.description}</Typography>
+        <Typography
+          variant="body2"
+          sx={{
+            textDecoration: params.row.completed ? "line-through" : "none",
+          }}
+        >
+          {params.row.description}
+        </Typography>
       ),
     },
     {
@@ -63,7 +88,7 @@ export default function ToDoTable({ email }: { email: string }) {
 
   return (
     <>
-      <Box sx={{ width: "80%", mt: 6 }}>
+      <Box sx={{ my: 6 }}>
         <DataGrid
           autoHeight
           rows={list}
@@ -80,6 +105,11 @@ export default function ToDoTable({ email }: { email: string }) {
             },
             "& .MuiDataGrid-cell, & .MuiDataGrid-columnHeaders": {
               borderColor: "#0d1f2d20",
+            },
+          }}
+          initialState={{
+            sorting: {
+              sortModel: [{ field: "completed", sort: "asc" }],
             },
           }}
         />

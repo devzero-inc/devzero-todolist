@@ -1,4 +1,4 @@
-import { Button, MenuItem, TextField, Typography } from "@mui/material";
+import { Box, Button, MenuItem, TextField, Typography } from "@mui/material";
 import * as yup from "yup";
 import { DatePicker } from "@mui/x-date-pickers";
 import { useFormik } from "formik";
@@ -31,7 +31,7 @@ export default function ToDoForm({ user }: ToDoFormType) {
     onSubmit: async (values, onSubmitProps) => {
       const postBody = {
         ...values,
-        completed: true,
+        completed: false,
       };
       await axios.post(`/api/create-todo/${user.email}`, postBody);
       mutate();
@@ -41,70 +41,89 @@ export default function ToDoForm({ user }: ToDoFormType) {
   });
   return (
     <>
-      <Typography variant="h1" sx={{ mb: 3 }}>
+      <Typography variant="h1" sx={{ mt: 6, mb: 3 }}>
         {user.name}'s To-do List
       </Typography>
-      <form
-        onSubmit={formik.handleSubmit}
-        style={{ display: "flex", alignItems: "center" }}
-      >
-        <TextField
-          type="text"
-          name="description"
-          id="description"
-          label="New to-do item"
-          onChange={formik.handleChange}
-          value={formik.values.description}
-          error={
-            formik.touched.description && Boolean(formik.errors.description)
-          }
-          helperText={formik.touched.description && formik.errors.description}
-          sx={{ mr: 2 }}
-        />
-        <DatePicker
-          label="Due date"
-          value={dateValue}
-          onChange={(newValue) => {
-            setDateValue(newValue);
-            formik.setFieldValue(
-              "due_date",
-              dayjs(newValue).format("MM-DD-YYYY")
-            );
+      <form onSubmit={formik.handleSubmit}>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            flexDirection: { xs: "column", md: "row" },
           }}
-          disablePast
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              error={formik.touched.due_date && Boolean(formik.errors.due_date)}
-              helperText={formik.touched.due_date && formik.errors.due_date}
-              sx={{ mr: 2 }}
-            />
-          )}
-        />
-        <TextField
-          select
-          type="text"
-          name="priority"
-          id="priority"
-          label="Priority"
-          onChange={formik.handleChange}
-          value={formik.values.priority}
-          sx={{ width: "200px", mr: 2 }}
-          error={formik.touched.priority && Boolean(formik.errors.priority)}
-          helperText={formik.touched.priority && formik.errors.priority}
         >
-          <MenuItem value="low">Low</MenuItem>
-          <MenuItem value="med">Medium</MenuItem>
-          <MenuItem value="high">High</MenuItem>
-        </TextField>
-        <Button
-          size="large"
-          variant="contained"
-          type="submit"
-          disabled={formik.isSubmitting}
-        >
-          Add
-        </Button>
+          <TextField
+            type="text"
+            name="description"
+            id="description"
+            label="New to-do item"
+            onChange={formik.handleChange}
+            value={formik.values.description}
+            error={
+              formik.touched.description && Boolean(formik.errors.description)
+            }
+            helperText={formik.touched.description && formik.errors.description}
+            sx={{
+              width: { xs: "100%", md: "300px" },
+              mr: { md: 2 },
+              mb: { xs: 2, md: 0 },
+            }}
+          />
+          <DatePicker
+            label="Due date"
+            value={dateValue}
+            onChange={(newValue) => {
+              setDateValue(newValue);
+              formik.setFieldValue(
+                "due_date",
+                dayjs(newValue).format("MM-DD-YYYY")
+              );
+            }}
+            disablePast
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                error={
+                  formik.touched.due_date && Boolean(formik.errors.due_date)
+                }
+                helperText={formik.touched.due_date && formik.errors.due_date}
+                sx={{
+                  width: { xs: "100%", md: "150px" },
+                  mr: { md: 2 },
+                  mb: { xs: 2, md: 0 },
+                }}
+              />
+            )}
+          />
+          <TextField
+            select
+            type="text"
+            name="priority"
+            id="priority"
+            label="Priority"
+            onChange={formik.handleChange}
+            value={formik.values.priority}
+            sx={{
+              width: { xs: "100%", md: "150px" },
+              mr: { md: 2 },
+              mb: { xs: 2, md: 0 },
+            }}
+            error={formik.touched.priority && Boolean(formik.errors.priority)}
+            helperText={formik.touched.priority && formik.errors.priority}
+          >
+            <MenuItem value="low">Low</MenuItem>
+            <MenuItem value="med">Medium</MenuItem>
+            <MenuItem value="high">High</MenuItem>
+          </TextField>
+          <Button
+            size="large"
+            variant="contained"
+            type="submit"
+            disabled={formik.isSubmitting}
+          >
+            Add
+          </Button>
+        </Box>
       </form>
     </>
   );
