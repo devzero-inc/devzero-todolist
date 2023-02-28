@@ -9,7 +9,7 @@ const createTodo = () => async (req: NextApiRequest, res: NextApiResponse) => {
       query: { user },
     } = req;
     const response: AxiosResponse = await axios.post(
-      `http://${process.env.API_HOST || "localhost"}:6000/users/${user}/todos`,
+      `${process.env.TODOLIST_APP_SVC_HOSTPORT || "http://localhost:6000"}/users/${user}/todos`,
       req.body
     );
     res.status(response.status || 200).json(response.data);
