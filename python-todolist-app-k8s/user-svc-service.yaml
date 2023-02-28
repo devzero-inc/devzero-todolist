@@ -10,8 +10,8 @@ metadata:
   name: user-svc
 spec:
   ports:
-    - name: "5000"
-      port: 5000
+    - name: "8000"
+      port: 8000
       targetPort: 8000
   selector:
     io.kompose.service: user-svc

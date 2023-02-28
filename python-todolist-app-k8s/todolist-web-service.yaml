@@ -10,9 +10,9 @@ metadata:
   name: todolist-web
 spec:
   ports:
-    - name: "8000"
-      port: 8000
-      targetPort: 8000
+    - name: "8080"
+      port: 8080
+      targetPort: 8080
   selector:
     io.kompose.service: todolist-web
 status:
