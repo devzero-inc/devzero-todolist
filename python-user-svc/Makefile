@@ -25,7 +25,8 @@ ecr_login:
 .PHONY: deploy
 deploy:
 	kubectl delete deployment/user-svc -n $(KUBE_NAMESPACE) || true
-	export REV=$(REV) && envsubst < ../user-svc-deployment.yaml | kubectl -n $(KUBE_NAMESPACE) apply -f -
+	export REV=$(REV) && envsubst < ../python-todolist-app-k8s/user-svc-deployment.yaml | kubectl -n $(KUBE_NAMESPACE) apply -f -
+	kubectl -n $(KUBE_NAMESPACE) apply -f ../python-todolist-app-k8s/user-svc-service.yaml
 
 .PHONY: mysqlsh
 mysqlsh:

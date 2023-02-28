@@ -32,6 +32,11 @@ curl --header "Content-Type: application/json"  \
   --request PUT \
   --data '{"todo_id":"26fea522-be64-42d9-9eb9-2a2a4ea93276", "completed": true}'\
   http://localhost:6000/users/debo@example.com/todos
+
+curl --header "Content-Type: application/json"  \
+  --request PUT \
+  --data '{"todo_id":"26fea522-be64-42d9-9eb9-2a2a4ea93276", "completed": true}'\
+  todolist-app:6000/users/debo@example.com/todos
 ```
 
 # user service 
@@ -66,4 +71,9 @@ curl --header "Content-Type: application/json" \
   --request POST \
   --data '{"name":"John Doe","email":"johndoe@example.com"}' \
   http://localhost:5000/users
+
+curl --header "Content-Type: application/json" \
+  --request POST \
+  --data '{"name":"John Doe","email":"johndoe@example.com"}' \
+  user-svc:5000/users
 ```
