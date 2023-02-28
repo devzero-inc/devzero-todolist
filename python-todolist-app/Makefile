@@ -25,7 +25,8 @@ ecr_login:
 .PHONY: deploy
 deploy:
 	kubectl delete deployment/todolist-app -n $(KUBE_NAMESPACE) || true
-	export REV=$(REV) && envsubst < ../todolist-app-deployment.yaml | kubectl -n $(KUBE_NAMESPACE) apply -f - 
+	export REV=$(REV) && envsubst < ../python-todolist-app-k8s/todolist-app-deployment.yaml | kubectl -n $(KUBE_NAMESPACE) apply -f - 
+	kubectl -n $(KUBE_NAMESPACE) apply -f ../python-todolist-app-k8s/todolist-app-service.yaml
 
 .PHONY: mysqlsh
 mysqlsh:
