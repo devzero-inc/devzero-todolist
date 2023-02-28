@@ -12,7 +12,7 @@ spec:
   ports:
     - name: "5000"
       port: 5000
-      targetPort: 5000
+      targetPort: 8000
   selector:
     io.kompose.service: user-svc
 status:

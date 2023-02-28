@@ -28,7 +28,7 @@ spec:
         - image: 749882936473.dkr.ecr.us-east-2.amazonaws.com/python-user-svc:${REV}
           name: user-svc
           ports:
-            - containerPort: 5000
+            - containerPort: 8000
           resources: {}
       restartPolicy: Always
 status: {}
