@@ -5,6 +5,10 @@
 curl --header "Content-Type: application/json" \
  --request GET \
  http://localhost:6000/users/debo@example.com/todos
+
+curl --header "Content-Type: application/json" \
+ --request GET \
+ todolist-app:6000/users/debo@example.com/todos
 ```
 
 #### add todo for a user
@@ -14,6 +18,11 @@ curl --header "Content-Type: application/json" \
   --request POST \
   --data '{"description":"todo-3","due_date":"01-15-2026", "priority":"low"}' \
   http://localhost:6000/users/debo@example.com/todos
+
+curl --header "Content-Type: application/json" \
+  --request POST \
+  --data '{"description":"todo-3","due_date":"01-15-2026", "priority":"low"}' \
+  todolist-app:6000/users/debo@example.com/todos
 ```
 
 #### edit todo for user
@@ -32,6 +41,10 @@ curl --header "Content-Type: application/json"  \
 curl --header "Content-Type: application/json" \
   --request GET \
   http://localhost:5000/users/debo@example.com
+
+curl --header "Content-Type: application/json" \
+  --request GET \
+  user-svc:5000/users/debo@example.com
 ```
 
 #### get users
@@ -40,6 +53,10 @@ curl --header "Content-Type: application/json" \
 curl --header "Content-Type: application/json" \
   --request GET \
   http://localhost:5000/users
+
+curl --header "Content-Type: application/json" \
+  --request GET \
+  user-svc:5000/users
 ```
 
 #### create user

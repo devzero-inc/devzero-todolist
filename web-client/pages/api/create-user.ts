@@ -6,7 +6,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 const createUser = () => async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const response: AxiosResponse = await axios.post(
-      `http://${process.env.API_HOST || "localhost"}:5000/users`,
+      `${process.env.USER_SVC_HOSTPORT || "http://localhost:5000"}/users`,
       req.body
     );
     res.status(response.status || 200).json(response.data);

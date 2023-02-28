@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f python-todolist-app/docker-compose.yml
+    kompose.version: 1.28.0 (c4137012e)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: todolist-app
+  name: todolist-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: todolist-app
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f python-todolist-app/docker-compose.yml
+        kompose.version: 1.28.0 (c4137012e)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/python-todolist-app-default: "true"
+        io.kompose.service: todolist-app
+    spec:
+      containers:
+        - env:
+            - name: USER_SVC_HOSTPORT
+              value: http://user-svc:5000
+          image: 749882936473.dkr.ecr.us-east-2.amazonaws.com/python-todolist-app:${REV}
+          name: todolist-app
+          ports:
+            - containerPort: 6000
+          resources: {}
+      restartPolicy: Always
+status: {}

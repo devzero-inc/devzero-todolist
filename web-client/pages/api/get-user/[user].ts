@@ -9,7 +9,7 @@ const getUser = () => async (req: NextApiRequest, res: NextApiResponse) => {
       query: { user },
     } = req;
     const response: AxiosResponse = await axios.get(
-      `http://${process.env.API_HOST || "localhost"}:5000/users/${user}`
+      `${process.env.USER_SVC_HOSTPORT || "http://localhost:5000"}/users/${user}`
     );
     res.status(response.status || 200).json(response.data);
   } catch (error: any) {

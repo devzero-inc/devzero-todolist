@@ -1,18 +1,14 @@
 RWREGISTRY = 749882936473.dkr.ecr.us-east-2.amazonaws.com
-APPNAME = python-todolist-app
+APPNAME = todolist-web
 REV := $(shell git rev-parse HEAD)
 -include ~/.env
 
 KUBE_NAMESPACE ?= $(shell cat /var/run/secrets/kubernetes.io/serviceaccount/namespace)
 
-.PHONY: run
-run:
-	docker-compose build --no-cache
-	docker-compose up --force-recreate --renew-anon-volumes
 
 .PHONY: build
 build:
-	DOCKER_BUILDKIT=1 docker build --platform linux/amd64  -t ${RWREGISTRY}/${APPNAME}:$(REV) app/
+	DOCKER_BUILDKIT=1 docker build --platform linux/amd64  -t ${RWREGISTRY}/${APPNAME}:$(REV) ./
 
 .PHONY: push
 push: ecr_login
@@ -24,8 +20,9 @@ ecr_login:
 
 .PHONY: deploy
 deploy:
-	kubectl delete deployment/todolist-app -n $(KUBE_NAMESPACE) || true
-	export REV=$(REV) && envsubst < ../todolist-app-deployment.yaml | kubectl -n $(KUBE_NAMESPACE) apply -f - 
+	kubectl delete deployment/${APPNAME} -n $(KUBE_NAMESPACE) || true
+	export REV=$(REV) && envsubst < ../python-todolist-app-k8s/todolist-web-deployment.yaml | kubectl -n $(KUBE_NAMESPACE) apply -f - 
+	kubectl -n $(KUBE_NAMESPACE) apply -f ../python-todolist-app-k8s/todolist-web-service.yaml
 
 .PHONY: mysqlsh
 mysqlsh:
