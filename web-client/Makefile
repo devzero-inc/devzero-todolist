@@ -8,11 +8,12 @@ KUBE_NAMESPACE ?= $(shell cat /var/run/secrets/kubernetes.io/serviceaccount/name
 
 .PHONY: build
 build:
-	DOCKER_BUILDKIT=1 docker build --platform linux/amd64  -t ${RWREGISTRY}/${APPNAME}:$(REV) ./
+	DOCKER_BUILDKIT=1 docker build --platform linux/amd64  -t ${RWREGISTRY}/${APPNAME}:$(REV) -t ${RWREGISTRY}/${APPNAME}:latest ./
 
 .PHONY: push
 push: ecr_login
 	docker push ${RWREGISTRY}/${APPNAME}:$(REV)
+	docker push ${RWREGISTRY}/${APPNAME}:latest
 
 .PHONY: ecr_login
 ecr_login:
@@ -21,7 +22,8 @@ ecr_login:
 .PHONY: deploy
 deploy:
 	kubectl delete deployment/${APPNAME} -n $(KUBE_NAMESPACE) || true
-	export REV=$(REV) && envsubst < ../python-todolist-app-k8s/todolist-web-deployment.yaml | kubectl -n $(KUBE_NAMESPACE) apply -f - 
+	kubectl delete service/${APPNAME} -n $(KUBE_NAMESPACE) || true
+	export REV=latest && envsubst < ../python-todolist-app-k8s/todolist-web-deployment.yaml | kubectl -n $(KUBE_NAMESPACE) apply -f - 
 	kubectl -n $(KUBE_NAMESPACE) apply -f ../python-todolist-app-k8s/todolist-web-service.yaml
 
 .PHONY: mysqlsh

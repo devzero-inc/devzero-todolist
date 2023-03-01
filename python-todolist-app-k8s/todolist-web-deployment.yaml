@@ -27,13 +27,13 @@ spec:
       containers:
         - env:
             - name: USER_SVC_HOSTPORT
-              value: http://user-svc:5000
+              value: http://user-svc:8000
             - name: TODOLIST_APP_SVC_HOSTPORT
               value: http://todolist-app:6000
           image: 749882936473.dkr.ecr.us-east-2.amazonaws.com/todolist-web:${REV}
           name: todolist-web
           ports:
-            - containerPort: 8000
+            - containerPort: 8080
           resources: {}
       restartPolicy: Always
 status: {}

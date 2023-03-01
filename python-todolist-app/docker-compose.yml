@@ -22,7 +22,7 @@ services:
     links:
       - db
     ports:
-      - "5000:5000"
+      - "8000:8000"
   todolist-web:
     build: ../web-client
     links:
@@ -32,4 +32,4 @@ services:
       USER_SVC_HOSTPORT: http://user-svc:5000
       TODOLIST_APP_SVC_HOSTPORT: http://todolist-app:6000
     ports:
-      - "8000:8000"
+      - "8080:8080"

@@ -27,7 +27,7 @@ spec:
       containers:
         - env:
             - name: USER_SVC_HOSTPORT
-              value: http://user-svc:5000
+              value: http://user-svc:8000
           image: 749882936473.dkr.ecr.us-east-2.amazonaws.com/python-todolist-app:${REV}
           name: todolist-app
           ports:
