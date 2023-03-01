@@ -45,11 +45,11 @@ curl --header "Content-Type: application/json"  \
 ```lang=bash
 curl --header "Content-Type: application/json" \
   --request GET \
-  http://localhost:5000/users/debo@example.com
+  http://localhost:8000/users/debo@example.com
 
 curl --header "Content-Type: application/json" \
   --request GET \
-  user-svc:5000/users/debo@example.com
+  user-svc:8000/users/debo@example.com
 ```
 
 #### get users
@@ -57,11 +57,11 @@ curl --header "Content-Type: application/json" \
 ```lang=bash
 curl --header "Content-Type: application/json" \
   --request GET \
-  http://localhost:5000/users
+  http://localhost:8000/users
 
 curl --header "Content-Type: application/json" \
   --request GET \
-  user-svc:5000/users
+  user-svc:8000/users
 ```
 
 #### create user
@@ -70,10 +70,10 @@ curl --header "Content-Type: application/json" \
 curl --header "Content-Type: application/json" \
   --request POST \
   --data '{"name":"John Doe","email":"johndoe@example.com"}' \
-  http://localhost:5000/users
+  http://localhost:8000/users
 
 curl --header "Content-Type: application/json" \
   --request POST \
   --data '{"name":"John Doe","email":"johndoe@example.com"}' \
-  user-svc:5000/users
+  user-svc:8000/users
 ```
