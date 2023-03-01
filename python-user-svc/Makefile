@@ -12,11 +12,12 @@ run:
 
 .PHONY: build
 build:
-	DOCKER_BUILDKIT=1 docker build --platform linux/amd64  -t ${RWREGISTRY}/${APPNAME}:$(REV) app/
+	DOCKER_BUILDKIT=1 docker build --platform linux/amd64  -t ${RWREGISTRY}/${APPNAME}:$(REV) -t ${RWREGISTRY}/${APPNAME}:latest app/
 
 .PHONY: push
 push: ecr_login
 	docker push ${RWREGISTRY}/${APPNAME}:$(REV)
+	docker push ${RWREGISTRY}/${APPNAME}:latest
 
 .PHONY: ecr_login
 ecr_login:
@@ -25,7 +26,8 @@ ecr_login:
 .PHONY: deploy
 deploy:
 	kubectl delete deployment/user-svc -n $(KUBE_NAMESPACE) || true
-	export REV=$(REV) && envsubst < ../python-todolist-app-k8s/user-svc-deployment.yaml | kubectl -n $(KUBE_NAMESPACE) apply -f -
+	kubectl delete service/user-svc -n $(KUBE_NAMESPACE) || true
+	export REV=latest && envsubst < ../python-todolist-app-k8s/user-svc-deployment.yaml | kubectl -n $(KUBE_NAMESPACE) apply -f -
 	kubectl -n $(KUBE_NAMESPACE) apply -f ../python-todolist-app-k8s/user-svc-service.yaml
 
 .PHONY: mysqlsh
