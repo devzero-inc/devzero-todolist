@@ -1,0 +1,37 @@
+dev:
+  commands:
+  - command: mkdir ./python-todolist-app-k8s/k8s_manifests
+    directory: devzero-todolist/python-todolist-app-k8s
+    name: install cmd
+  - command: mv ./python-todolist-app-k8s/db-service.yaml ./python-todolist-app-k8s/k8s_manifests/
+      && mv ./python-todolist-app-k8s/todolist-web-service.yaml ./python-todolist-app-k8s/k8s_manifests/
+      && mv ./python-todolist-app-k8s/user-svc-service.yaml ./python-todolist-app-k8s/k8s_manifests/
+      && mv ./python-todolist-app-k8s/todolist-app-service.yaml ./python-todolist-app-k8s/k8s_manifests/
+      && mv ./python-todolist-app-k8s/todolist-web-deployment.yaml ./python-todolist-app-k8s/k8s_manifests/
+      && mv ./python-todolist-app-k8s/db-deployment.yaml ./python-todolist-app-k8s/k8s_manifests/
+      && mv ./python-todolist-app-k8s/user-svc-deployment.yaml ./python-todolist-app-k8s/k8s_manifests/
+      && mv ./python-todolist-app-k8s/todolist-app-deployment.yaml ./python-todolist-app-k8s/k8s_manifests/
+    directory: devzero-todolist/python-todolist-app-k8s
+    name: install cmd
+  - command: kubectl apply -f k8s-manifests
+    directory: devzero-todolist/python-todolist-app-k8s
+    name: install cmd
+  - command: python -m venv --copies ~/.venv && . ~/.venv/bin/activate && pip install
+      -r requirements.txt
+    directory: devzero-todolist/python-user-svc/app
+    name: install cmd
+  - command: python -m venv --copies ~/.venv && . ~/.venv/bin/activate && pip install
+      -r requirements.txt
+    directory: devzero-todolist/python-todolist-app/app
+    name: install cmd
+  - command: npm install
+    directory: devzero-todolist/web-client
+    name: install cmd
+  name: ""
+  packages:
+  - nixpkgs.gcc
+  - nixpkgs.kubernetes
+  - nixpkgs.nodejs_18
+  - nixpkgs.python38
+  repos:
+  - https://github.com/devzero-inc/devzero-todolist
