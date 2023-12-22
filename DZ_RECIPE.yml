@@ -1,0 +1,11 @@
+dev:
+  commands:
+  - command: npm install
+    directory: devzero-todolist/web-client
+    name: install cmd
+  name: ""
+  packages:
+  - nixpkgs.kubernetes
+  - nixpkgs.nodejs_18
+  repos:
+  - https://github.com/devzero-inc/devzero-todolist
